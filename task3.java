@@ -1,41 +1,43 @@
-package testngProject.Day7;
+package com.tasks.day8.day_8;
 
-import org.testng.annotations.Test;
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
-import org.testng.annotations.BeforeMethod;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.annotations.AfterMethod;
-
 public class task3 {
-	WebDriver driver=new ChromeDriver();
-	  @BeforeMethod
-	  public void openURL() {
-		  
-		  WebDriverManager.edgedriver().setup();
-		  driver.navigate().to("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
-		  driver.manage().window().maximize();
-		 
-	  }
-	  
-	  @Test  
-	  public void login() throws InterruptedException
-	  {
-		  Thread.sleep(3000);	  
-		  driver.findElement(By.name("username")).sendKeys("Admin");
-		  Thread.sleep(3000);
-		  driver.findElement(By.name("password")).sendKeys("admin123");
-		  Thread.sleep(3000);
-		  driver.findElement(By.xpath("//*[@id=\"app\"]/div[1]/div/div[1]/div/div[2]/div[2]/form/div[3]/button")).click();
-		  Thread.sleep(3000);
-	  }
-	  
-	  @AfterMethod
-	  public void close()
-	  {
-		  driver.quit();
-	  }
+		public static void main(String args[]) throws InterruptedException
+		{
+			
+			WebDriverManager.chromedriver().setup();
+			WebDriver driver = new ChromeDriver();
+			driver.get("https://demo.guru99.com/test/delete_customer.php");
+			driver.manage().window().maximize();
+			
+			 WebElement val = driver.findElement(By.xpath("/html/body/form/table/tbody/tr[2]/td[2]/input"));
+			 val.sendKeys("401");
+			 WebElement sub = driver.findElement(By.xpath("/html/body/form/table/tbody/tr[3]/td[2]/input[1]"));
+			 sub.click();
+			 
+			 Alert a=driver.switchTo().alert();
+			 a.dismiss();
+			 
+			 val.clear();
+			 Thread.sleep(5000);
+			 val.sendKeys("402");
+			 sub.click();
+			 
+			 a.accept();
+			 
+			 Alert b=driver.switchTo().alert();
+			 String text = b.getText();
+			 b.accept();
+			 System.out.print(text);
+			 driver.quit();
+		
+		}
+
 	}
