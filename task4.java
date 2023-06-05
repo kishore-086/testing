@@ -1,41 +1,32 @@
-package com.tasks.day8.day_8;
+package testngProject.Day6;
+
+import java.time.Duration;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class task4 {
-	public static void main(String args[]) throws InterruptedException
-	{
+	public static void main(String[] args) {
 		WebDriverManager.chromedriver().setup();
-		WebDriver driver = new ChromeDriver();
-		
-		driver.get("https://www.abhibus.com/bus-ticket-booking");
+		WebDriver driver=new ChromeDriver();
 		driver.manage().window().maximize();
-		WebElement org = driver.findElement(By.xpath("//*[@id=\"source\"]"));
-		org.sendKeys("Coimbatore");
-		Thread.sleep(3000);
-		org.sendKeys(Keys.ENTER);
-		
-		org.click();
+		driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+		driver.navigate().to("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
+		WebElement username=driver.findElement(By.xpath("//input[@name=\"username\"]"));
+		username.sendKeys("Admin");
+		WebElement password=driver.findElement(By.xpath("//input[@name=\"password\"]"));
+		password.sendKeys("admin123");
+	    WebElement button;
+	    WebDriverWait wait=new WebDriverWait(driver,Duration.ofSeconds(50));
+	    button=wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"app\"]/div[1]/div/div[1]/div/div[2]/div[2]/form/div[3]/button")));
+	    button.click();
+		}
 
-		 
-		  Thread.sleep(3000);
-		WebElement des = driver.findElement(By.name("destination"));
-		des.click();
-		Thread.sleep(3000);
-		des.sendKeys("Chidambaram");
-		Thread.sleep(3000);
-		des.sendKeys(Keys.ENTER);
-
-		driver.findElement(By.xpath("//*[@id=\"datepicker1\"]")).click();
-		driver.findElement(By.xpath("//*[@id=\"todaydiv\"]/h4")).click();
-		driver.findElement(By.xpath("//*[@id=\"seo_search_btn\"]")).click();
-		
-		
-	}
 }

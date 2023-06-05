@@ -1,63 +1,36 @@
-package com.tasks.day8.day_8;
+package testngProject.Day6;
 
-import java.util.Set;
+import java.time.Duration;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.WindowType;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class task5 {
-	public static void main(String args[]) throws InterruptedException
-	{
-		
-		WebDriverManager.edgedriver().setup();
-		WebDriver driver = new ChromeDriver();
-		
-		driver.get("https://google.com");
+	public static void main(String[] args) {
+		WebDriverManager.chromedriver().setup();
+		WebDriver driver=new ChromeDriver();
 		driver.manage().window().maximize();
-		WebElement search1 = driver.findElement(By.name("q"));
-		search1.sendKeys("Apple");
-		driver.findElement(By.name("q")).sendKeys(Keys.ENTER);
-		Thread.sleep(5000);
-		String t1 = driver.getTitle();
-		String id1 = driver.getWindowHandle();
-		System.out.println(t1);
-		System.out.println(id1);
-		
-		driver.switchTo().newWindow(WindowType.TAB);
-		
-		driver.get("https://google.com");
-		driver.manage().window().maximize();
-		WebElement search2 = driver.findElement(By.name("q"));
-		search2.sendKeys("Selenium");
-		driver.findElement(By.name("q")).sendKeys(Keys.ENTER);
-		Thread.sleep(5000);
-		String t2 = driver.getTitle();
-		String id2 = driver.getWindowHandle();
-		System.out.println(t2);
-		System.out.println(id2);
-		
-		driver.switchTo().newWindow(WindowType.TAB);
-		
-		driver.get("https://google.com");
-		driver.manage().window().maximize();
-		WebElement search3 = driver.findElement(By.name("q"));
-		search3.sendKeys("Cucumber");
-		driver.findElement(By.name("q")).sendKeys(Keys.ENTER);
-		Thread.sleep(5000);
-		String t3 = driver.getTitle();
-		String id3 = driver.getWindowHandle();
-		System.out.println(t3);
-		System.out.println(id3);
-		
-		Set< String> total = driver.getWindowHandles();
-		System.out.println("Total Tabs : "+total.size());
-		driver.quit();
-	}
-	
+		driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+		driver.navigate().to("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
+		WebElement username=driver.findElement(By.xpath("//input[@name=\"username\"]"));
+		username.sendKeys("Admin");
+		WebElement password=driver.findElement(By.xpath("//input[@name=\"password\"]"));
+		password.sendKeys("admin123");
+	    WebElement button;
+	    WebDriverWait wait=new WebDriverWait(driver,Duration.ofSeconds(50));
+	    button=wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"app\"]/div[1]/div/div[1]/div/div[2]/div[2]/form/div[3]/button")));
+	    button.click();
+	    WebElement profile=driver.findElement(By.xpath("//*[@id=\"app\"]/div[1]/div[1]/header/div[1]/div[2]/ul/li/span/p"));
+	    profile.click();
+	    WebElement logout=driver.findElement(By.linkText("Logout"));
+	    logout.click();
+		}
+
 }
